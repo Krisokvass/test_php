@@ -1,9 +1,11 @@
-php<?php
+<?php
 $filenames = ['2.txt', '3.txt', '4.txt', '5.txt'];
-foreach ($filenames as $file) {
-    if (file_exists($file)) {
-        unlink($file);
+
+foreach ($filenames as $filename) {
+    if (file_exists($filename)) {
+        unlink($filename);
     }
 }
-echo "Файлы успешно удалены.";
+
+echo "Файлы удалены.";
 ?>

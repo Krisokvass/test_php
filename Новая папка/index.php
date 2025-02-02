@@ -1,10 +1,10 @@
 <?php
-// РћР±СЂР°Р±РѕС‚РєР° РіРѕР»РѕСЃРѕРІР°РЅРёСЏ
+// Обработка голосования
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $vote = $_POST['vote'] ?? null;
 
     if ($vote) {
-        // РћС‚РєСЂС‹С‚СЊ С„Р°Р№Р» РІС‹Р±СЂР°РЅРЅРѕРіРѕ РіРѕР»РѕСЃР°
+        // Открыть файл выбранного голоса
         $filename = $vote . '.txt';
         $count = (int)file_get_contents($filename);
         $count++;
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Р§С‚РµРЅРёРµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ РіРѕР»РѕСЃРѕРІР°РЅРёСЏ
+// Чтение результатов голосования
 $results = [];
 foreach (['2.txt', '3.txt', '4.txt', '5.txt'] as $filename) {
     $results[$filename] = (int)file_get_contents($filename);
@@ -23,27 +23,27 @@ foreach (['2.txt', '3.txt', '4.txt', '5.txt'] as $filename) {
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Р“РѕР»РѕСЃРѕРІР°РЅРёРµ</title>
+    <title>Голосование</title>
 </head>
 <body>
-    <h1>РљР°Рє РІС‹ РѕС†РµРЅРёРІР°РµС‚Рµ РЅР°С€ С‚РѕРІР°СЂ?</h1>
+    <h1>Как вы оцениваете наш товар?</h1>
     <form method="post">
-        <input type="radio" name="vote" value="5" checked> РћС‚Р»РёС‡РЅРѕ<br>
-        <input type="radio" name="vote" value="4"> РҐРѕСЂРѕС€Рѕ<br>
-        <input type="radio" name="vote" value="3"> РЈРґРѕРІР»РµС‚РІРѕСЂРёС‚РµР»СЊРЅРѕ<br>
-        <input type="radio" name="vote" value="2"> РџР»РѕС…Рѕ<br>
-        <input type="submit" value="РџСЂРѕРіРѕР»РѕСЃРѕРІР°С‚СЊ">
+        <input type="radio" name="vote" value="5" checked> Отлично<br>
+        <input type="radio" name="vote" value="4"> Хорошо<br>
+        <input type="radio" name="vote" value="3"> Удовлетворительно<br>
+        <input type="radio" name="vote" value="2"> Плохо<br>
+        <input type="submit" value="Проголосовать">
     </form>
     
-    <h2>Р РµР·СѓР»СЊС‚Р°С‚С‹ РіРѕР»РѕСЃРѕРІР°РЅРёСЏ:</h2>
+    <h2>Результаты голосования:</h2>
     <ul>
-        <li>РћС‚Р»РёС‡РЅРѕ (5): <?= $results['5.txt'] ?></li>
-        <li>РҐРѕСЂРѕС€Рѕ (4): <?= $results['4.txt'] ?></li>
-        <li>РЈРґРѕРІР»РµС‚РІРѕСЂРёС‚РµР»СЊРЅРѕ (3): <?= $results['3.txt'] ?></li>
-        <li>РџР»РѕС…Рѕ (2): <?= $results['2.txt'] ?></li>
+        <li>Отлично (5): <?= $results['5.txt'] ?></li>
+        <li>Хорошо (4): <?= $results['4.txt'] ?></li>
+        <li>Удовлетворительно (3): <?= $results['3.txt'] ?></li>
+        <li>Плохо (2): <?= $results['2.txt'] ?></li>
     </ul>
 
-    <h2>Р”РёР°РіСЂР°РјРјР° РіРѕР»РѕСЃРѕРІР°РЅРёСЏ:</h2>
+    <h2>Диаграмма голосования:</h2>
     <div style="display: flex; margin-top: 20px;">
         <?php foreach ($results as $file => $count): 
             $label = basename($file, '.txt'); ?>
